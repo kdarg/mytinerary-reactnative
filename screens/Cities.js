@@ -8,10 +8,7 @@ import HeroCities from '../components/HeroCities';
 
 
 const Cities = (props) => {
-    console.log(props)
-
-    // var img = "https://mytinerary-arguello.herokuapp.com/cities" + props.src
-
+    //console.log(props)
 
     useEffect(() => {
         async function getCities() {
@@ -43,7 +40,7 @@ return (
         </TouchableWithoutFeedback>
 
         <ScrollView style={styles.citiesContainer}>
-            <View style={styles.citiesScroll}>
+            <View style={styles.mapContainer}>
                 {(props.cityfiltered.length !== 0) ? props.cityfiltered.map ((city, index) => {
                 return (
                     <View style={styles.boxCity} key={index}>
@@ -69,6 +66,7 @@ return (
 }
 
 const styles = StyleSheet.create({
+
     image:{
         display: "flex",
         alignItems: "center",
@@ -106,7 +104,7 @@ const styles = StyleSheet.create({
         height: "100%",
         backgroundColor:'rgb(255, 234, 252)',
     },
-    citiesScroll: {
+    mapContainer: {
         justifyContent: "center",
         alignItems: "center"
     },
