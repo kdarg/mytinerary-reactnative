@@ -1,16 +1,21 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 const initialState = {
     user: null,
     message:null,
-    newuser: {}
+    newuser: {},
+
 }
 
 const userReducer = (state = initialState, action) => {
     
     switch (action.type) {
+
         case 'user':
             return {
                 ...state,
-                user: action.payload,   
+                user: action.payload, 
+
             }
 
         case 'message':
@@ -24,6 +29,15 @@ const userReducer = (state = initialState, action) => {
                     ...state,
                     newuser: action.payload,  
             }
+            // case "user_logout" :
+            //     const deleteStorage = async () =>{
+            //         return  await AsyncStorage.removeItem('token')
+            //     }
+            //     deleteStorage()
+            //     return{
+            //         user:null,
+
+            //     }
 
         default:
             return state

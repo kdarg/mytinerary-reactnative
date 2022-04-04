@@ -44,7 +44,11 @@ return (
                 {(props.cityfiltered.length !== 0) ? props.cityfiltered.map ((city, index) => {
                 return (
                     <View style={styles.boxCity} key={index}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                                props.navigation.navigate('city', {
+                                    id: city._id
+                                })
+                            }}>
                         <View style={styles.boxCities}>
                             <Image source={{uri:`https://mytinerary-arguello.herokuapp.com/assets/cities/${city.src}`}} style={styles.image}/>
                             <Text style={styles.place}>{city.city} - {city.country}</Text>

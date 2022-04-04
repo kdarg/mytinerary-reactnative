@@ -1,7 +1,7 @@
 
 import axios from 'axios';
-const Swal = require("sweetalert2");
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import {ToastAndroid} from 'react-native'
 
 const userActions = {
     
@@ -13,60 +13,30 @@ const userActions = {
             try{
 
                 const res = await axios.post('https://mytinerary-arguello.herokuapp.com/api/auth/signup', {userData})
-            dispatch({type: 'message', payload: res.data});
-            console.log(res.data)
-            console.log(res.data.message)
-            console.log(userData)
 
-            if (res.data.success) {
-                dispatch({ type: "user", payload: res.data });
-                console.log(res.data)
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "center-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    background: "#FFF",
-                    iconColor: "rgb(86, 216, 151)",
-                    confirmButtonColor: "rgb(221, 46, 113)",
-                    timerProgressBar: true,
-                    
-                    didOpen: (toast) => {
-                        toast.addEventListener("mouseenter", Swal.stopTimer);
-                        toast.addEventListener("mouseleave", Swal.resumeTimer);
-                    },
-                });
-    
-                Toast.fire({
-                    icon: "success",
-                    title: `${res.data.message }`
-                });
-            }
-            else {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    confirmButtonColor: "rgb(221, 46, 113)",
-                    background: "#FFF",
-                    iconColor: "rgb(238, 76, 103)",
-                    timerProgressBar: true,
-                    
-                    didOpen: (toast) => {
-                        toast.addEventListener("mouseenter", Swal.stopTimer);
-                        toast.addEventListener("mouseleave", Swal.resumeTimer);
-                    },
-                });
+                console.log(res)
+                dispatch({type: 'message', payload: res.data});
 
-                Toast.fire({
-                    icon: "error",
-                    title: `${res.data.message} `,
-                    background: "#FFF",
-                    iconColor: "rgb(216, 86, 86)",
-                    confirmButtonColor: "rgb(221, 46, 113)",
-                });
-            }
+                if(res.data.success){
+                    AsyncStorage.setItem("token", res.data) //chan
+                    dispatch({type:"user", payload: res.data})
+                }
+                return res
+                // dispatch({type: 'message', payload: res.data});
+                // return res
+            // console.log(res.data)
+            // console.log(res.data.message)
+            // console.log(userData)
+
+            // if(res.data.success){
+            //     props.navigation.navigate('Home')
+            //     ToastAndroid.showWithGravityAndOffset('Welcome!', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 25, 50)
+            // }else if (res.data.errors){ 
+            //     let errors= res.data.errors
+            //     errors.map(error => ToastAndroid.showWithGravityAndOffset( error.message, ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50))
+            //     }else{
+            //         ToastAndroid.showWithGravityAndOffset('Please try again!', ToastAndroid.CENTER, ToastAndroid.BOTTOM, 25,50)
+            //     }
 
             } catch (error) {
                 console.log(error);
@@ -75,70 +45,34 @@ const userActions = {
         }
     }, 
 
+
     // LOG IN
 
     logInUser: (logedUser) => {
         return async (dispatch, getState) => {
 
             try{
+                console.log(logedUser)
 
-                const user = await axios.post('https://mytinerary-arguello.herokuapp.com/api/auth/login', { logedUser })
+                const loginResponse = await axios.post('https://mytinerary-arguello.herokuapp.com/api/auth/login', { logedUser })
+
+                if(loginResponse.data.success){
+                    AsyncStorage.setItem('token', loginResponse.data.response.token)
+                    dispatch({type:"user", payload: loginResponse.data.response.logedUser || loginResponse.data.response.userData})
+                }
+                return loginResponse
+
+                // return loginResponse
+
+                // if(!user.data.error){
+                //     ToastAndroid.showWithGravityAndOffset('Email and password dont match', ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50)
+                // }else{
+                //     ToastAndroid.showWithGravityAndOffset('Welcome Back!', ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50)
+                // }
 
                     //console.log(user.data)
 
-                    
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "center-end",
-                showConfirmButton: false,
-                timer: 3000,
-                background: "#FFF",
-                iconColor: "rgb(238, 76, 103)",
-                confirmButtonColor: "rgb(221, 46, 113)",
-                timerProgressBar: true,
                 
-                didOpen: (toast) => {
-                    toast.addEventListener("mouseenter", Swal.stopTimer);
-                    toast.addEventListener("mouseleave", Swal.resumeTimer);
-                },
-            });
-
-            Toast.fire({
-                icon: "error",
-                title: `${user.data.message}`,
-            });
-            
-                //console.log(user)
-                
-                if(user.data.success){
-    
-                    localStorage.setItem('token',user.data.response.token)
-    
-                    dispatch({type: 'user', payload: user.data.response.logedUser || user.data.response.userData });
-    
-                    //console.log(user.data.response.userData.firstname)
-
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "center-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        background: "#FFF",
-                        iconColor: "rgb(86, 216, 151)",
-                        confirmButtonColor: "rgb(221, 46, 113)",
-                        timerProgressBar: true,
-                        
-                        didOpen: (toast) => {
-                            toast.addEventListener("mouseenter", Swal.stopTimer);
-                            toast.addEventListener("mouseleave", Swal.resumeTimer);
-                        },
-                    })
-                    Toast.fire({
-                        icon: "success",
-                        title: `${user.data.message}`,
-                    })
-
-                }
 
             }catch (error) {
                 console.log(error);
@@ -149,16 +83,18 @@ const userActions = {
 
     // LOG OUT
 
-    LogOutUser: (closeuser)=>{
+    LogOutUser: ()=>{
         return async (dispatch, getState) => {
 
-        //const user = axios.post('https://mytinerary-arguello.herokuapp.com/api/auth/signOut', {closeuser})
+        // localStorage.removeItem('token')
+            console.log('6666666666666666666666666666666666666666666666')
 
-        localStorage.removeItem('token')
+            AsyncStorage.removeItem('token')
 
-        dispatch({type: 'user', payload: null});
+            dispatch({type:"user", payload: null})
 
-        //console.log(user.data)
+            ToastAndroid.showWithGravityAndOffset('Goodbye! ', ToastAndroid.LONG, ToastAndroid.CENTER, 25,50)
+            
         } 
     },
 
@@ -173,7 +109,7 @@ const userActions = {
                     'Authorization': 'Bearer ' + token
                 }
             })
-            //console.log(user)
+            // console.log(user)
             
             if (user.data.success) {
                 dispatch({ type: 'user', payload: user.data.response });
@@ -186,8 +122,26 @@ const userActions = {
                     }
                 });
             } else {
-                localStorage.removeItem('token')
+                // localStorage.removeItem('token')
+                AsyncStorage.removeItem('token')
             }
+            
+
+
+
+            //     try{
+            //         let response = await axios.get('https://mytinerary-arguello.herokuapp.com/api/auth/signInToken', {
+            //     headers: {
+            //         Authorization: 'Bearer '+ token,
+            //     }
+            // })
+            //     dispatch({type:"user", payload:{token, response}})
+            //     }catch(error) {
+            //        return  dispatch({type:'user_logout' })
+            //     }
+            
+
+       
 
         }
     }

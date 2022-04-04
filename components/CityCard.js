@@ -1,39 +1,38 @@
-// import React from 'react';
-// import { StyleSheet, Text, View, ImageBackground, Pressable } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, View, ImageBackground, Pressable } from 'react-native'
 
-// const CityCard = (props) => {
+const CardCity = (props) => {
+     const{src, _id, city}=props.city
 
-//     const{src, _id, name}=props.city
+    return(
+        <Pressable onPress={() => props.navigation.navigate('City', { id: _id })}>
+        <ImageBackground style={styles.containerCity} source={{ uri:`https://mytinerary-arguello.herokuapp.com/${src}`}} resizeMode="cover" imageStyle={{borderRadius:15}} >
+            <Text style={styles.cityTitle}>{city}</Text>
+        </ImageBackground>
+    </Pressable>
+    )
+}
 
-//     return(
-//         <Pressable onPress={() => props.navigation.navigate('City', { id: _id })}>
-//         <ImageBackground style={styles.containerCity} source={{ uri:`https://mytinerary-arguello.herokuapp.com/${src}`}} resizeMode="cover" imageStyle={{borderRadius:15}} >
-//             <Text style={styles.cityTitle}>{name}</Text>
-//         </ImageBackground>
-//     </Pressable>
-//     )
-// }
+const styles = StyleSheet.create({
+    containerCity:{
+        width: 322,
+        height: 350,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginVertical:10,
 
-// const styles = StyleSheet.create({
-//     containerCity:{
-//         width: 322,
-//         height: 350,
-//         alignItems: 'center',
-//         justifyContent: 'flex-end',
-//         marginVertical:10,
-
-//     },
-//     cityTitle:{
-//         padding:10,
-//         color: "whitesmoke",
-//         fontSize: 38,
-//         textAlign: "center",
-//         fontFamily: 'ZenLoop_400Regular',
-//         textShadowColor: '#000', 
-//         textShadowOffset: { width: 0.5, height: 0.5 },
-//         textShadowRadius: 5
-//     },
+    },
+    cityTitle:{
+        padding:10,
+        color: "whitesmoke",
+        fontSize: 38,
+        textAlign: "center",
+        fontFamily: 'ZillaSlabHighlight_700Bold',
+        textShadowColor: '#000', 
+        textShadowOffset: { width: 0.5, height: 0.5 },
+        textShadowRadius: 5
+    },
     
-// })
+})
 
-// export default CityCard;
+export default CardCity
