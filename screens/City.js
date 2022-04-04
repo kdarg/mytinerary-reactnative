@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     noResultsContainer: {
-        marginTop: "5%",
+        // marginTop: "5%",
         marginLeft: "12%",
-        marginBottom: "5%",
+        marginBottom: "10%",
         height: "100%",
         display: "flex",
         alignContent: "center",

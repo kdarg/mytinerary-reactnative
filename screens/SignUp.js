@@ -24,13 +24,13 @@ const SignUp = (props) =>{
                 // console.log(response)
 
                 if(response.data.success){
-                    props.navigation.navigate('Home')
-                    ToastAndroid.showWithGravityAndOffset('Thanks for signing up!', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 25, 50)
+                    props.navigation.navigate('Log in')
+                    ToastAndroid.showWithGravityAndOffset('Thanks for signing up, you can now login!', ToastAndroid.LONG, ToastAndroid.CENTER, 25, 50)
                 }else if (response.data.errors){ 
                     let errors= response.data.errors
                     errors.map(error => ToastAndroid.showWithGravityAndOffset( error.message, ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50))
                     }else{
-                        ToastAndroid.showWithGravityAndOffset('Please try again!', ToastAndroid.CENTER, ToastAndroid.BOTTOM, 25,50)
+                        ToastAndroid.showWithGravityAndOffset('Please try again!', ToastAndroid.SHORT, ToastAndroid.BOTTOM, 25,50)
                     }
             }catch(error){
                 console.log(error)
@@ -67,7 +67,7 @@ const SignUp = (props) =>{
 
             <Button title="Create Account" buttonStyle={styles.getStarted} onPress={signUpForm}/>
 
-            <TouchableOpacity onPress={() => props.navigation.navigate('LogIn')}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Log in')}>
                 <Text style={styles.already}>Already have an account?</Text>
                 <Text style={styles.loginhere}>Log in here</Text>
             </TouchableOpacity >

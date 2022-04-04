@@ -49,17 +49,18 @@ const DrawerNavigator = (props) => {
     }, [])
 
     const refreshUserToken = async () => {
-
+        
         const tokenFromStorage = await AsyncStorage.getItem("token")
         setToken(tokenFromStorage)
         console.log(tokenFromStorage)
+
 
     }
 
 
 function Logo() {
     return (
-    <Image style={{ width: 50, height: 50, paddingHorizontal: 270, resizeMode:'contain'}} source={require('../assets/newlogo.png')}/>
+    <Image style={{ width: 50, height: 50, marginRight: 13,resizeMode:'contain'}} source={require('../assets/newlogo.png')}/>
     )
 }
 
@@ -73,11 +74,11 @@ const CustomDrawerContent = (props) => {
 
                     <View style={styles.containerUserFoto}>
                     {!props.token 
-                        ? <Image style={{width:50, height:50}} source={require('../assets/userIcon.png')} />
+                        ? <Image style={{width:50, height:50, marginTop:30}} source={require('../assets/userIcon.png')} />
                         : <Image style={styles.userProfile} source={{uri:props.urlimage}}/>}
                      {props.token
                       ? <Text style={styles.nameUser}>Welcome {props.firstname}</Text>
-                      : <Text style={styles.nameUser}>User</Text>}
+                      : <Text style={styles.nameUser}></Text>}
                     </View>
                     <DrawerItemList {...props}  /> 
                     {props.token && <DrawerItem label="Log Out" 
@@ -100,14 +101,18 @@ return (
 
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} token={token} urlimage={urlimage} firstname={firstname} refreshUserToken={refreshUserToken} />}>
 
-        <Drawer.Screen name="Home" component={StackHome} options={{ headerTitle: (props) => <Logo {...props}/>}}/>
-        <Drawer.Screen name="Cities" component={StackCities} options={{ headerTitle: (props) => <Logo {...props}/>}}/>
+        <Drawer.Screen name="Home" component={StackHome} 
+        
+        options={{ headerRight: (props) => <Logo {...props}/> , headerTitle: () => <></> } } />
+
+
+        <Drawer.Screen name="Cities" component={StackCities} options={{ headerRight: (props) => <Logo {...props}/> , headerTitle: () => <></>}}/>
         {/* <Drawer.Screen name="Log in" component={StackLogIn} options={{ headerTitle: (props) => <Logo {...props}/>}}/>
         <Drawer.Screen name="Sign up" component={StackSignUp} options={{ headerTitle: (props) => <Logo {...props}/>}}/> */}
 
-        {!token && <Drawer.Screen name="Log in" component={StackLogIn} options={{ headerTitle: (props) => <Logo {...props}/>}}/>}
+        {!token && <Drawer.Screen name="Log in" component={StackLogIn} options={{ headerRight: (props) => <Logo {...props}/> , headerTitle: () => <></>}}/>}
 
-        {!token && <Drawer.Screen name="Sign up" component={StackSignUp} options={{ headerTitle: (props) => <Logo {...props}/>}}/>}
+        {!token && <Drawer.Screen name="Sign up" component={StackSignUp} options={{ headerRight: (props) => <Logo {...props}/> , headerTitle: () => <></>}}/>}
 
     </Drawer.Navigator>
 

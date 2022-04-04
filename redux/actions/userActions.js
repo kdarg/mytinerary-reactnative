@@ -17,10 +17,12 @@ const userActions = {
                 console.log(res)
                 dispatch({type: 'message', payload: res.data});
 
-                if(res.data.success){
-                    AsyncStorage.setItem("token", res.data) //chan
-                    dispatch({type:"user", payload: res.data})
-                }
+                // if(res.data.success){
+                //     AsyncStorage.setItem("token", res.data) //chan
+                //     console.log('5555555555555555555555555555555555555555555');
+                //     console.log(res.data);
+                //     dispatch({type:"user", payload: res.data})
+                // }
                 return res
                 // dispatch({type: 'message', payload: res.data});
                 // return res
