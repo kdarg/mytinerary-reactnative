@@ -22,7 +22,7 @@ const LogIn = (props) =>{
                 if(!res.data.success){
                     ToastAndroid.showWithGravityAndOffset('Email and password dont match', ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50)
                 }else{
-                    ToastAndroid.showWithGravityAndOffset('Welcome Back!', ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50)
+                    ToastAndroid.showWithGravityAndOffset('"Hey, wrelcome!', ToastAndroid.SHORT, ToastAndroid.CENTER, 25,50)
                 }
             }catch (error){
                console.log(error)

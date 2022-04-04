@@ -77,7 +77,7 @@ const CustomDrawerContent = (props) => {
                         ? <Image style={{width:50, height:50, marginTop:30}} source={require('../assets/userIcon.png')} />
                         : <Image style={styles.userProfile} source={{uri:props.urlimage}}/>}
                      {props.token
-                      ? <Text style={styles.nameUser}>Welcome {props.firstname}</Text>
+                      ? <Text style={styles.nameUser}>{props.firstname}</Text>
                       : <Text style={styles.nameUser}></Text>}
                     </View>
                     <DrawerItemList {...props}  /> 
