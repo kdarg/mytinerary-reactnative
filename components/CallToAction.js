@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     getStarted: {
         backgroundColor: "rgb(221, 46, 113);",
         color: "white",
-        marginTop:10,
+        // marginTop:10,
         alignSelf: "center",
         alignItems:"center",
     },

@@ -45,7 +45,7 @@ const LogIn = (props) =>{
         <ScrollView style={{backgroundColor:'rgb(255, 234, 252)', height:'100%'}}>
         <View style={{display:'flex', justifyContent:"center", alignContent:"center", alignItems:'center'}}>
             <View style={styles.signUpContainer}>
-            <Text style={styles.signUpTitle}>Welcome Back!</Text>
+            <Text style={styles.signUpTitle}>Create Account</Text>
         
             <View style={styles.inputContainer}>
         
